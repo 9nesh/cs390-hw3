@@ -36,7 +36,7 @@ This project demonstrates a rotating 3D cube implemented using WebGL. The cube r
 - `vertex-shader.glsl`: The vertex shader source code
 - `fragment-shader.glsl`: The fragment shader source code
 - `rotation-library.glsl`: A GLSL library containing rotation-related functions
-- `shaders/initShaders.js`: A utility module for initializing shaders (not shown in the provided context)
+- `shaders/initShaders.js`: A utility module for initializing shaders
 
 ## Setup and Running
 
