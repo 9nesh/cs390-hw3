@@ -8,6 +8,7 @@ let rotationAngle = 0; // Current rotation angle
 let fixedPoint, rotationAxis; // Rotation parameters
 
 // Function to process shader source code
+
 async function processShaderSource(source) {
     // Regular expression to find #include directives
     const includeRegex = /#include\s+"([^"]+)"/g;
@@ -22,6 +23,10 @@ async function processShaderSource(source) {
 }
 
 // Function to load shader sources
+// I made the loadShaders function asynchronous because it fetches shader sources from external files. 
+// Using await allows the code to wait for these shaders to load before proceeding. 
+// This ensures that the shaders are available before the WebGL setup continues.
+
 async function loadShaders() {
     const vertexShaderSource = await fetch('vertex-shader.glsl').then(response => response.text()); // Fetch vertex shader source
     const fragmentShaderSource = await fetch('fragment-shader.glsl').then(response => response.text()); // Fetch fragment shader source
@@ -30,6 +35,10 @@ async function loadShaders() {
 }
 
 // Main function to initialize WebGL and set up the shader program
+// used async because fetch is async and initShaders is async and also, I used a .catch block 
+// (see last line of this code) to handle any errors that occur during the asynchronous operations. 
+// This makes ita clean way to catch and log errors from the entire initialization process.
+
 async function main() {
     const canvas = document.getElementById('glCanvas'); // Get the canvas element
     gl = canvas.getContext('webgl'); // Get the WebGL context
@@ -52,7 +61,6 @@ async function main() {
 
     // Set up cube vertices and colors
     // this is structured as a cube with 6 faces, each with 4 vertices and 4 colors 
-
     const vertices = [
         // Front face
         -0.5, -0.5,  0.5,
@@ -86,7 +94,8 @@ async function main() {
         -0.5,  0.5, -0.5
     ];
 
-
+    // colors array specifies the color of each vertex in the cube. 
+    // Each set of four values in the array represents the RGBA color components for a vertex.
     const colors = [
         // Front face (red)
         1.0, 0.0, 0.0, 1.0,
@@ -120,6 +129,8 @@ async function main() {
         0.0, 1.0, 1.0, 1.0
     ];
 
+    // indices array specifies which vertices to connect to form triangles. 
+// Each set of three indices in the array represents a triangle.
     const indices = [
         0,  1,  2,      0,  2,  3,    // front
         4,  5,  6,      4,  6,  7,    // back
@@ -169,10 +180,11 @@ async function main() {
     function render() {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        rotationAngle += 0.01;
+        rotationAngle += 0.01; // increment the rotation angle
         gl.uniform1f(rotationAngleLocation, rotationAngle);
 
-        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0); 
+        // unsigned short is used to store the indices of the vertices that make up each triangle
 
         requestAnimationFrame(render);
     }
