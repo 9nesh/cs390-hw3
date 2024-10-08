@@ -1,5 +1,7 @@
 # CS390 - Homework 3: Rotating 3D Cube with WebGL
 
+### Live Demo: [https://9nesh.github.io/cs390-hw3/index.html](https://9nesh.github.io/cs390-hw3/index.html)
+
 This project demonstrates a rotating 3D cube implemented using WebGL. The cube rotates around a fixed point, with each face colored differently.
 
 ## Setup and Running
