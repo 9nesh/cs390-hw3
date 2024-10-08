@@ -6,7 +6,7 @@ let gl; // WebGL context
 let program; // Shader program
 let rotationAngle = 0; // Current rotation angle
 let fixedPoint, rotationAxis; // Rotation parameters
-
+let xAxis, yAxis, zAxis, speed;
 // Function to process shader source code
 
 async function processShaderSource(source) {
@@ -173,14 +173,42 @@ async function main() {
 
     // Set initial values for rotation
     fixedPoint = [0.0, 0.0, 0.0];
-    rotationAxis = [1.0, 1.0, 1.0];
+    rotationAxis = [1.0, 1.0, 1.0]; // vector along the main diagonal of the unit cube
     gl.uniform3fv(fixedPointLocation, fixedPoint);
     gl.uniform3fv(rotationAxisLocation, rotationAxis);
+
+    function setupControls() {
+        xAxis = document.getElementById('xAxis');
+        yAxis = document.getElementById('yAxis');
+        zAxis = document.getElementById('zAxis');
+        speed = document.getElementById('speed');
+    
+        [xAxis, yAxis, zAxis, speed].forEach(control => {
+            control.addEventListener('input', updateRotationParameters);
+        });
+    }
+    
+    function updateRotationParameters() {
+        // update the rotation axis based on the values of the x, y, and z axis controls
+        // Setting X to 1 and others to 0 rotates around the X-axis
+        // Setting Y to 1 and others to 0 rotates around the Y-axis
+        // Setting Z to 1 and others to 0 rotates around the Z-axis
+        // Setting all to 1 rotates around the diagonal of the cube
+        rotationAxis = [
+            parseFloat(xAxis.value),
+            parseFloat(yAxis.value),
+            parseFloat(zAxis.value)
+        ];
+        gl.uniform3fv(rotationAxisLocation, rotationAxis);
+    }
+    
+    setupControls();
+    updateRotationParameters();
 
     function render() {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        rotationAngle += 0.01; // increment the rotation angle
+        rotationAngle += parseFloat(speed.value); // use the speed control value
         gl.uniform1f(rotationAngleLocation, rotationAngle);
 
         gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0); 

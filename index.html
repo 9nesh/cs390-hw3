@@ -7,9 +7,28 @@
 </head>
 <body>
     <canvas id="glCanvas" width="600" height="600"></canvas>
+
+
+    <div>
+
+        <!-- update the rotation axis based on the values of the x, y, and z axis controls -->
+        <!-- Setting X to 1 and others to 0 rotates around the X-axis -->
+        <!-- Setting Y to 1 and others to 0 rotates around the Y-axis -->
+        <!-- Setting Z to 1 and others to 0 rotates around the Z-axis -->
+        <!-- Setting all to 1 rotates around the diagonal of the cube -->
+        <label for="xAxis">X-axis:</label>
+        -1<input type="range" id="xAxis" min="-1" max="1" step="0.1" value="1">1
+        <label for="yAxis">Y-axis:</label>
+        -1<input type="range" id="yAxis" min="-1" max="1" step="0.1" value="1">1    
+        <label for="zAxis">Z-axis:</label>
+        -1<input type="range" id="zAxis" min="-1" max="1" step="0.1" value="1">1
+        <label for="speed">Speed:</label>
+        0<input type="range" id="speed" min="0" max="0.1" step="0.001" value="0.01">0.1
+    </div>
     <script src = "./shaders/MVnew.js"></script>
     <!-- gl-matrix library for matrix and vector operations -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script> -->
     <script src="./main.js" type="module"></script>
+
 </body>
 </html>
