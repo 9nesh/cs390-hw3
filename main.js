@@ -188,6 +188,12 @@ async function main() {
         });
     }
     
+    function updateFactDisplay() {
+        document.getElementById('rotationAxisDisplay').textContent = `[${rotationAxis.map(v => v.toFixed(2))}]` + " (normalized)"; // display the rotation axis as a vector by using map to convert each component to a string with two decimal places. 
+        document.getElementById('rotationAngleDisplay').textContent = ((rotationAngle * 180 / Math.PI) % 360).toFixed(2) + " degrees"; // display the rotation angle in degrees instead of radians
+        document.getElementById('rotationSpeedDisplay').textContent = speed.value + " (radians per frame)"; // display the rotation speed
+    }
+
     function updateRotationParameters() {
         // update the rotation axis based on the values of the x, y, and z axis controls
         // Setting X to 1 and others to 0 rotates around the X-axis
@@ -200,6 +206,7 @@ async function main() {
             parseFloat(zAxis.value)
         ];
         gl.uniform3fv(rotationAxisLocation, rotationAxis);
+        updateFactDisplay();
     }
     
     setupControls();
@@ -208,11 +215,12 @@ async function main() {
     function render() {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        rotationAngle += parseFloat(speed.value); // use the speed control value
+        rotationAngle += parseFloat(speed.value); 
         gl.uniform1f(rotationAngleLocation, rotationAngle);
 
-        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0); 
-        // unsigned short is used to store the indices of the vertices that make up each triangle
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+
+        updateFactDisplay();
 
         requestAnimationFrame(render);
     }

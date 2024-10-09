@@ -25,6 +25,12 @@
         <label for="speed">Speed:</label>
         0<input type="range" id="speed" min="0" max="0.1" step="0.001" value="0.01">0.1
     </div>
+    <div id="factDisplay">
+        <h3>Rotating Cube Facts:</h3>
+        <p>Rotation Axis: <span id="rotationAxisDisplay"></span></p>
+        <p>Rotation Angle: <span id="rotationAngleDisplay"></span></p>
+        <p>Rotation Speed: <span id="rotationSpeedDisplay"></span></p>
+    </div>
     <script src = "./shaders/MVnew.js"></script>
     <!-- gl-matrix library for matrix and vector operations -->
     <!--  I don't need this anymore since MVnew.js has its own matrix and vector operations -->
